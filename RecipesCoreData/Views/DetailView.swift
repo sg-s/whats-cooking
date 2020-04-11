@@ -11,72 +11,48 @@ import CoreData
 
 
 struct DetailView: View {
-    
-    var recipe: Recipe
+
     
     
     @Environment(\.managedObjectContext) var context
+    @Environment(\.presentationMode) var presentationMode
     
-    //@Environment(\.presentationMode) var presentationMode
+    var recipe: Recipe
+    
+    @State private var text: String = ""
     
     var body: some View {
         
         VStack{
             Image(systemName: "camera")
+                .frame(height: 300)
+                .edgesIgnoringSafeArea(.top)
             
-            Text("SOS")
+            TextField(self.recipe.name!, text: $text)
                 .font(.title)
             
         
             Spacer()
             
             Button (action: {
-                
-                self.updateLastCooked(self.recipe)
-                
-                //self.presentationMode.wrappedValue.dismiss()
+                // self.presentationMode.wrappedValue.dismiss()
+                self.updateLastCooked(recipe: self.recipe)
                 
                 }) {
                     Text("Just cooked!")
-                    
                 }
-            
             Spacer()
             
         } // VStack
-            .navigationBarTitle(Text(recipe.name!), displayMode: .inline)
+        .navigationBarTitle(Text(recipe.name!), displayMode: .inline)
+    
     } // body
     
-    func updateLastCooked(_ recipe: Recipe) {
-
+    func updateLastCooked(recipe: Recipe) {
         recipe.lastCooked = Date()
-        do {
-          try  context.save()
-        } catch {
-        
-        }
-        
-        
-        
-        // No idea why I used this old and incredible complex code
-//        let recipeID = recipe.id! as NSUUID
-//        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Recipe")
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", recipeID as CVarArg)
-//        fetchRequest.fetchLimit = 1
-//
-//        do {
-//          let test = try context.fetch(fetchRequest)
-//          let recipeUpdate = test[0] as! NSManagedObject
-//          recipeUpdate.setValue(Date(), forKey: "lastCooked")
-//        } catch {
-//          print(error)
-//        }
-        
+    } // func
     
-      }
-    
-    
-    
+
 } // DetailView
 
 //struct DetailView_Previews: PreviewProvider {

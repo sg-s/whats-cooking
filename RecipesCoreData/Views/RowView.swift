@@ -12,9 +12,10 @@ import UIKit
 struct RowView: View {
     
     // RowView recieves this recipe from ContentView
-    // it's declared to be state here. 
-    @State var recipe: Recipe
+    var recipe: FetchedResults<Recipe>.Element
     
+    
+    // simple date formatter
     func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM"
@@ -35,29 +36,26 @@ struct RowView: View {
     }
     
     var body: some View {
-        
-       // NavigationLink(destination: DetailView(recipe: $recipe)) {
- 
-            HStack {
-                
-                Image(systemName: "camera")
-                    .frame(width: 50, height: 50)
-                
-                VStack{
-                   Text(recipe.name ?? "No name given")
-                       .font(.largeTitle)
-                       .fontWeight(.bold)
-                       .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(Color(self.getRandomColor()))
-                   
-                   Text("Last cooked on \(formatDate(date: recipe.lastCooked!))")
-                       .frame(maxWidth: .infinity, alignment: .leading)
-                       .foregroundColor(.gray)
-               } // VStack
-                
-            } // HStack
-        
-        // } // Navigation Link
+    
+        HStack {
+            
+            Image(systemName: "camera")
+                .frame(width: 50, height: 50)
+            
+            VStack{
+               Text(recipe.name ?? "No name given")
+                   .font(.largeTitle)
+                   .fontWeight(.bold)
+                   .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color(self.getRandomColor()))
+               
+               Text("Last cooked on \(formatDate(date: recipe.lastCooked!))")
+                   .frame(maxWidth: .infinity, alignment: .leading)
+                   .foregroundColor(.gray)
+           } // VStack
+        } // HStack
+    
+
         
     } // body: View
 } // struct RowView

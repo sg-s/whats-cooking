@@ -28,14 +28,7 @@ struct NewRecipeView: View {
         newRecipe.id = UUID()
         newRecipe.name = text
         newRecipe.lastCooked = Date()
-        
-        
-        // try to save the recipe we add
-        do {
-            try context.save()
-        } catch {
-            print(error)
-        }
+        // this is magically saved to disk
     }
 }
 

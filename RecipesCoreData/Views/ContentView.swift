@@ -20,15 +20,20 @@ struct ContentView: View {
     // initialize it here
     @State private var recipeName: String = ""
     
+
+    // get all data, sorted by lastCooked
+    @FetchRequest(
+        entity: Recipe.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Recipe.lastCooked, ascending: true)]
+    ) var allRecipes: FetchedResults<Recipe>
     
     // @Binding declares the dependency on a @state var
-    // owneed by another view, which uses the $prefix to
+    // owned by another view, which uses the $prefix to
     // pass a binding to this state to another view.
     // in the recieving view, @Binding var is a reference
     // to the data, so it doesn't need to be initialzied
     
-    
-    
+
     @State var modalIsPresented = false
     
     
@@ -37,11 +42,10 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach (allRecipes) { recipe in
-                    NavigationLink(destination: DetailView(recipe: recipe)) {
+                    NavigationLink(destination: DetailView(recipe: recipe).environment(\.managedObjectContext, self.context)) {
                         RowView(recipe: recipe)
                     } // nav link
                     
- 
                 }
                 .onDelete(perform: removeRecipe)
                 
@@ -62,40 +66,18 @@ struct ContentView: View {
                 }
         }
     }
-    
-    
-    func updateLastCooked(_ recipe: Recipe) {
-        let recipeID = recipe.id! as NSUUID
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Recipe")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", recipeID as CVarArg)
-        fetchRequest.fetchLimit = 1
-        do {
-            let test = try context.fetch(fetchRequest)
-            let recipeUpdate = test[0] as! NSManagedObject
-            recipeUpdate.setValue(Date(), forKey: "lastCooked")
-        } catch {
-            print(error)
-        }
-    }
+
     
     func removeRecipe(at offsets: IndexSet) {
         for index in offsets {
             let recipe = allRecipes[index]
             context.delete(recipe)
-        }
-        
-        do {
-            try context.save()
-        } catch {
-            print(error)
+            // this magically saves the data also
         }
     }
     
     
-    @FetchRequest(
-        entity: Recipe.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Recipe.lastCooked, ascending: true)]
-    ) var allRecipes: FetchedResults<Recipe>
+    
 }
 
 //struct ContentView_Previews: PreviewProvider {
