@@ -18,11 +18,9 @@ struct RowView: View {
         //dateFormatter.timeStyle = .none
         return dateFormatter.string(from: date)
     
-        
     }
     
-    
-     
+
 
     func getRandomColor() -> UIColor {
          //Generate between 0 to 1
@@ -58,8 +56,8 @@ struct RowView: View {
     }
 }
 
-struct RowView_Previews: PreviewProvider {
-    static var previews: some View {
-        RowView(recipe: Recipe())
-    }
-}
+//struct RowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RowView(recipe: Recipe())
+//    }
+//}

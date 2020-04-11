@@ -39,8 +39,8 @@ struct NewRecipeView: View {
     }
 }
 
-struct NewRecipeView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewRecipeView()
-    }
-}
+//struct NewRecipeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewRecipeView()
+//    }
+//}
