@@ -10,7 +10,10 @@ import SwiftUI
 import UIKit
 
 struct RowView: View {
-    var recipe: Recipe
+    
+    // RowView recieves this recipe from ContentView
+    // it's declared to be state here. 
+    @State var recipe: Recipe
     
     func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()

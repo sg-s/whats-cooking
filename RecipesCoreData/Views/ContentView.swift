@@ -13,7 +13,21 @@ struct ContentView: View {
     
     @Environment(\.managedObjectContext) var context 
     
+    
+    // recipeName is owned and managed by ContentView
+    // which is why we have marked it as private
+    // because we marked it as @State, we have to
+    // initialize it here
     @State private var recipeName: String = ""
+    
+    
+    // @Binding declares the dependency on a @state var
+    // owneed by another view, which uses the $prefix to
+    // pass a binding to this state to another view.
+    // in the recieving view, @Binding var is a reference
+    // to the data, so it doesn't need to be initialzied
+    
+    
     
     @State var modalIsPresented = false
     
