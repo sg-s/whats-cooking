@@ -36,23 +36,26 @@ struct RowView: View {
     var body: some View {
         
         
-        VStack{
-            Text(recipe.name ?? "No name given")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        HStack {
             
-            Text("Last cooked on \(formatDate(date: recipe.lastCooked!))")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.gray)
+            Image(systemName: "camera")
+                .frame(width: 50, height: 50)
+            
+            VStack{
+               Text(recipe.name ?? "No name given")
+                   .font(.largeTitle)
+                   .fontWeight(.bold)
+                   .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color(self.getRandomColor()))
+               
+               Text("Last cooked on \(formatDate(date: recipe.lastCooked!))")
+                   .frame(maxWidth: .infinity, alignment: .leading)
+                   .foregroundColor(.gray)
+           }
+    
+            
         }
-        
-        
-            
-    .foregroundColor(Color(self.getRandomColor()))
     }
-    
-    
 }
 
 struct RowView_Previews: PreviewProvider {
