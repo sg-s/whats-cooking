@@ -38,11 +38,11 @@ struct ContentView: View {
             List {
                 ForEach (allRecipes) { recipe in
                     
-                    Button (action: {
-                        self.updateLastCooked(recipe)
-                    }) {
+//                    Button (action: {
+//                        self.updateLastCooked(recipe)
+//                    }) {
                         RowView(recipe: recipe)
-                    }
+                    //}
                 }
                 .onDelete(perform: removeRecipe)
                 

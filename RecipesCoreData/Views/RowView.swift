@@ -37,27 +37,29 @@ struct RowView: View {
     var body: some View {
         
         
-        HStack {
-            
-            Image(systemName: "camera")
-                .frame(width: 50, height: 50)
-            
-            VStack{
-               Text(recipe.name ?? "No name given")
-                   .font(.largeTitle)
-                   .fontWeight(.bold)
-                   .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color(self.getRandomColor()))
-               
-               Text("Last cooked on \(formatDate(date: recipe.lastCooked!))")
-                   .frame(maxWidth: .infinity, alignment: .leading)
-                   .foregroundColor(.gray)
-           }
-    
-            
+        NavigationLink(destination: DetailView(recipe: $recipe)) {
+            HStack {
+                
+                Image(systemName: "camera")
+                    .frame(width: 50, height: 50)
+                
+                VStack{
+                   Text(recipe.name ?? "No name given")
+                       .font(.largeTitle)
+                       .fontWeight(.bold)
+                       .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(Color(self.getRandomColor()))
+                   
+                   Text("Last cooked on \(formatDate(date: recipe.lastCooked!))")
+                       .frame(maxWidth: .infinity, alignment: .leading)
+                       .foregroundColor(.gray)
+               } // VStack
+            } // HStack
         }
-    }
-}
+        
+        
+    } // body: View
+} // struct RowView
 
 //struct RowView_Previews: PreviewProvider {
 //    static var previews: some View {
