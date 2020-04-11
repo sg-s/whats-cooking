@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AC1198D524411145006B74AA /* What's Cooking?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "What's Cooking?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1198D524411145006B74AA /* Mealcycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mealcycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1198D824411145006B74AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC1198DA24411145006B74AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		AC1198DD24411145006B74AA /* RecipesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecipesCoreData.xcdatamodel; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 		AC1198D624411145006B74AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AC1198D524411145006B74AA /* What's Cooking?.app */,
+				AC1198D524411145006B74AA /* Mealcycle.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,7 +112,7 @@
 			);
 			name = RecipesCoreData;
 			productName = RecipesCoreData;
-			productReference = AC1198D524411145006B74AA /* What's Cooking?.app */;
+			productReference = AC1198D524411145006B74AA /* Mealcycle.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -319,7 +319,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = gs.srinivas.RecipesCoreData;
-				PRODUCT_NAME = "What's Cooking?";
+				PRODUCT_NAME = Mealcycle;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -340,7 +340,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = gs.srinivas.RecipesCoreData;
-				PRODUCT_NAME = "What's Cooking?";
+				PRODUCT_NAME = Mealcycle;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
