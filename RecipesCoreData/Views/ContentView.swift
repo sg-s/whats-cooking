@@ -37,12 +37,11 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach (allRecipes) { recipe in
-                    
-//                    Button (action: {
-//                        self.updateLastCooked(recipe)
-//                    }) {
+                    NavigationLink(destination: DetailView(recipe: recipe)) {
                         RowView(recipe: recipe)
-                    //}
+                    } // nav link
+                    
+ 
                 }
                 .onDelete(perform: removeRecipe)
                 

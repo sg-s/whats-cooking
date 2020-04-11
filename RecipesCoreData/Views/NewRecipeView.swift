@@ -9,7 +9,7 @@ struct NewRecipeView: View {
     // \. is a keypath
     @Environment(\.presentationMode) var presentationMode
     
-    @State var text: String = ""
+    @State private var text: String = ""
     
     var body: some View {
         Form {

@@ -36,8 +36,8 @@ struct RowView: View {
     
     var body: some View {
         
-        
-        NavigationLink(destination: DetailView(recipe: $recipe)) {
+       // NavigationLink(destination: DetailView(recipe: $recipe)) {
+ 
             HStack {
                 
                 Image(systemName: "camera")
@@ -54,9 +54,10 @@ struct RowView: View {
                        .frame(maxWidth: .infinity, alignment: .leading)
                        .foregroundColor(.gray)
                } // VStack
+                
             } // HStack
-        }
         
+        // } // Navigation Link
         
     } // body: View
 } // struct RowView
