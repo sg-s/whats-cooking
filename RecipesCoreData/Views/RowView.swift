@@ -18,7 +18,7 @@ struct RowView: View {
     // simple date formatter
     func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM"
+        dateFormatter.dateFormat = "dd MMM hh:mm"
         //dateFormatter.timeStyle = .none
         return dateFormatter.string(from: date)
     
