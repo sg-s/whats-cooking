@@ -25,7 +25,7 @@ struct ContentView: View {
     @FetchRequest(
         entity: Recipe.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Recipe.lastCooked, ascending: true)]
-    ) var allRecipes: FetchedResults<Recipe>
+    ) var recipes: FetchedResults<Recipe>
     
     // @Binding declares the dependency on a @state var
     // owned by another view, which uses the $prefix to
@@ -41,11 +41,22 @@ struct ContentView: View {
         
         NavigationView {
             List {
-                ForEach (allRecipes) { recipe in
-                    NavigationLink(destination: DetailView(recipe: recipe).environment(\.managedObjectContext, self.context)) {
-                        RowView(recipe: recipe)
-                    } // nav link
-                    
+                ForEach(recipes, id: \.self) { recipe in
+                    NavigationLink(destination: DetailView(recipe: recipe)) {
+                        
+                        VStack{
+                            Text(recipe.name!)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                 .foregroundColor(Color(self.getRandomColor()))
+                            
+                            Text("Last cooked on \(self.formatDate(date: recipe.lastCooked!))")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(.gray)
+                        } // VStack
+                        
+                    }
                 }
                 .onDelete(perform: removeRecipe)
                 
@@ -66,11 +77,32 @@ struct ContentView: View {
                 }
         }
     }
+    
+    
+    // simple date formatter
+    func formatDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM hh:mm:ss"
+        //dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: date)
+    
+    }
+    
+
+
+    func getRandomColor() -> UIColor {
+         //Generate between 0 to 1
+         let red:CGFloat = CGFloat(drand48())
+         let green:CGFloat = CGFloat(drand48())
+         let blue:CGFloat = CGFloat(drand48())
+
+         return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
+    }
 
     
     func removeRecipe(at offsets: IndexSet) {
         for index in offsets {
-            let recipe = allRecipes[index]
+            let recipe = recipes[index]
             context.delete(recipe)
             // this magically saves the data also
         }
@@ -79,9 +111,3 @@ struct ContentView: View {
     
     
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
