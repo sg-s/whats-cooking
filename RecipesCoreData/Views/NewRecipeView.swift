@@ -3,7 +3,7 @@ import SwiftUI
 
 struct NewRecipeView: View {
     
-    @Environment(\.managedObjectContext) var context 
+    @Environment(\.managedObjectContext) var context
     
     
     // \. is a keypath
@@ -25,15 +25,10 @@ struct NewRecipeView: View {
     
     func addRecipe() {
         let newRecipe = Recipe(context: context)
-        newRecipe.id = UUID()
         newRecipe.name = text
         newRecipe.lastCooked = Date()
-        // this is magically saved to disk
+        do {
+            try self.context.save()
+        } catch {}
     }
 }
-
-//struct NewRecipeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NewRecipeView()
-//    }
-//}

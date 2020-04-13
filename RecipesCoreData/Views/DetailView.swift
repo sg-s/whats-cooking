@@ -6,57 +6,55 @@
 //  Copyright © 2020 srinivas.gs. All rights reserved.
 //
 
-import SwiftUI
-import CoreData
 
+import SwiftUI
 
 struct DetailView: View {
-
-    
-    
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     
-    var recipe: Recipe
+    @State var itemName: String = ""
+    @ObservedObject var recipe: Recipe
     
-    @State private var text: String = ""
     
     var body: some View {
-        
-        VStack{
-            Image(systemName: "camera")
-                .frame(height: 300)
-                .edgesIgnoringSafeArea(.top)
-            
-            TextField(self.recipe.name, text: $text)
-                .font(.title)
-            
-        
-            Spacer()
-            
-            Button (action: {
-                // self.presentationMode.wrappedValue.dismiss()
-                self.updateLastCooked(recipe: self.recipe)
-                
-                }) {
-                    Text("Just cooked!")
+        VStack {
+            TextField("Item Name", text: $itemName)
+            Button(action: {
+                self.recipe.name = self.itemName
+                do {
+                    try self.context.save()
+                } catch {
+                    print(error)
                 }
+                
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Save")
+            }
+            
             Spacer()
             
-        } // VStack
-        .navigationBarTitle(Text(recipe.name), displayMode: .inline)
-    
-    } // body
-    
-    func updateLastCooked(recipe: Recipe) {
-        recipe.lastCooked = Date()
-    } // func
-    
+            Button(action: {
+                self.recipe.lastCooked = Date()
+                do {
+                    try self.context.save()
+                } catch {
+                    print(error)
+                }
+                
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Just cooked!")
+            }
+            
+            
+            Spacer()
+            
+        }
+        .onAppear(perform: {
+            self.itemName = self.recipe.name
+        })
+    }
+}
 
-} // DetailView
-
-//struct DetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DetailView()
-//    }
-//}
