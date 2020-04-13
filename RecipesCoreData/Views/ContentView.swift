@@ -22,17 +22,9 @@ struct ContentView: View {
         ForEach(recipes, id: \.self) { recipe in
           NavigationLink(destination: DetailView(recipe: recipe)) {
               
-            VStack{
-              Text(recipe.name)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color(self.getRandomColor()))
-                  
-                Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
-                  .frame(maxWidth: .infinity, alignment: .leading)
-                  .foregroundColor(.gray)
-              } // VStack
+            RowView(recipe: recipe)
+            
+//
           
             } // NavigationLink
         } // ForEach
@@ -58,25 +50,9 @@ struct ContentView: View {
   } // body
     
     
-    // simple date formatter
-    func formatDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM hh:mm:ss"
-        //dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: date)
     
-    } // formatDate
     
 
-
-    func getRandomColor() -> UIColor {
-         //Generate between 0 to 1
-         let red:CGFloat = CGFloat(drand48())
-         let green:CGFloat = CGFloat(drand48())
-         let blue:CGFloat = CGFloat(drand48())
-
-         return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
-    } // getRandomColor
 
     func deleteItem(indexSet: IndexSet) {
         let source = indexSet.first!
@@ -101,5 +77,46 @@ struct ContentView: View {
         }
     } // saveItems
   
-} // View
+} // ContentView
 
+
+struct RowView: View {
+
+  @ObservedObject var recipe: Recipe
+
+  // simple date formatter
+  func formatDate(date: Date) -> String {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "dd MMM hh:mm:ss"
+      //dateFormatter.timeStyle = .none
+      return dateFormatter.string(from: date)
+  
+  } // formatDate
+  
+  
+  func getRandomColor() -> UIColor {
+       //Generate between 0 to 1
+       let red:CGFloat = CGFloat(drand48())
+       let green:CGFloat = CGFloat(drand48())
+       let blue:CGFloat = CGFloat(drand48())
+
+       return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
+  } // getRandomColor
+  
+var body: some View {
+  
+  VStack{
+    Text(recipe.name)
+      .font(.largeTitle)
+      .fontWeight(.bold)
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .foregroundColor(Color(self.getRandomColor()))
+
+      Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .foregroundColor(.gray)
+    } // VStack
+  
+} // RowView:body
+  
+} // RowView

@@ -14,8 +14,10 @@ struct DetailView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var itemName: String = ""
+    @State var lastCooked: Date = Date()
     @ObservedObject var recipe: Recipe
     
+    @State var justCooked: Bool = false
     
     var body: some View {
         VStack {
@@ -25,12 +27,6 @@ struct DetailView: View {
                     .font(.title)
                 Button(action: {
                     self.recipe.name = self.itemName
-                    do {
-                        try self.context.save()
-                    } catch {
-                        print(error)
-                    }
-                    
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("SAVE")
@@ -46,14 +42,8 @@ struct DetailView: View {
             Spacer()
             
             Button(action: {
-                self.recipe.lastCooked = Date()
-                do {
-                    try self.context.save()
-                } catch {
-                    print(error)
-                }
-                
-                self.presentationMode.wrappedValue.dismiss()
+                self.justCooked = true
+                // self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Just cooked!")
             }
@@ -64,6 +54,18 @@ struct DetailView: View {
         }
         .onAppear(perform: {
             self.itemName = self.recipe.name
+        })
+        .onDisappear(perform: {
+            
+            if self.justCooked {
+                self.recipe.lastCooked = self.lastCooked
+            }
+            
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
         })
     }
 }
