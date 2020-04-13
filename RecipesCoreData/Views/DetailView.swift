@@ -19,19 +19,29 @@ struct DetailView: View {
     
     var body: some View {
         VStack {
-            TextField("Item Name", text: $itemName)
-            Button(action: {
-                self.recipe.name = self.itemName
-                do {
-                    try self.context.save()
-                } catch {
-                    print(error)
+            
+            HStack{
+                TextField("Item Name", text: $itemName)
+                    .font(.title)
+                Button(action: {
+                    self.recipe.name = self.itemName
+                    do {
+                        try self.context.save()
+                    } catch {
+                        print(error)
+                    }
+                    
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("SAVE")
+                        .fontWeight(.bold)
+                        .background(Color.green)
+                        .padding(30)
+                        
                 }
-                
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Save")
             }
+            
+            
             
             Spacer()
             

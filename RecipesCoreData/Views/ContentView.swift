@@ -22,22 +22,21 @@ struct ContentView: View {
         ForEach(recipes, id: \.self) { recipe in
           NavigationLink(destination: DetailView(recipe: recipe)) {
               
-              VStack{
-                  Text(recipe.name)
-                      .font(.largeTitle)
-                      .fontWeight(.bold)
-                      .frame(maxWidth: .infinity, alignment: .leading)
-                       .foregroundColor(Color(self.getRandomColor()))
+            VStack{
+              Text(recipe.name)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color(self.getRandomColor()))
                   
-                  Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
-                      .frame(maxWidth: .infinity, alignment: .leading)
-                      .foregroundColor(.gray)
+                Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
+                  .frame(maxWidth: .infinity, alignment: .leading)
+                  .foregroundColor(.gray)
               } // VStack
           
             } // NavigationLink
         } // ForEach
-          .onDelete(perform: deleteItem)
-          
+        .onDelete(perform: deleteItem)
       } // List
             
         .navigationBarTitle("What's cooking?")
