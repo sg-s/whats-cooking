@@ -10,51 +10,53 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(fetchRequest: Recipe.getListItemFetchRequest()) var recipes: FetchedResults<Recipe>
-    
-    @State var modalIsPresented = false
-    
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    ForEach(recipes, id: \.self) { recipe in
-                        NavigationLink(destination: DetailView(recipe: recipe)) {
-                            
-                            VStack{
-                                Text(recipe.name)
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                     .foregroundColor(Color(self.getRandomColor()))
-                                
-                                Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(.gray)
-                            } // VStack
-                            
-                        }
-                    }
-                    .onDelete(perform: deleteItem)
-                    
-                }
-                
-            }
-            .navigationBarTitle("What's cooking?")
-            .navigationBarItems(
-            leading: EditButton(),
-            trailing:
-                Button(
-                    action: {self.modalIsPresented = true}) {
-                Image(systemName: "plus.app.fill")
-                } )
-            .sheet(isPresented: $modalIsPresented) {
-            NewRecipeView().environment(\.managedObjectContext, self.context)
-            }
+  @Environment(\.managedObjectContext) var context
+  @FetchRequest(fetchRequest: Recipe.getListItemFetchRequest()) var recipes: FetchedResults<Recipe>
+
+  @State var modalIsPresented = false
+
+
+  var body: some View {
+    NavigationView {
+      List {
+        ForEach(recipes, id: \.self) { recipe in
+          NavigationLink(destination: DetailView(recipe: recipe)) {
+              
+              VStack{
+                  Text(recipe.name)
+                      .font(.largeTitle)
+                      .fontWeight(.bold)
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                       .foregroundColor(Color(self.getRandomColor()))
+                  
+                  Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                      .foregroundColor(.gray)
+              } // VStack
+          
+            } // NavigationLink
+        } // ForEach
+          .onDelete(perform: deleteItem)
+          
+      } // List
+            
+        .navigationBarTitle("What's cooking?")
+        .navigationBarItems(
+        leading: EditButton(),
+        trailing:
+            Button(
+                action: {self.modalIsPresented = true}) {
+            Image(systemName: "plus.app.fill")
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(height: 30)
+
+            } )
+        .sheet(isPresented: $modalIsPresented) {
+        NewRecipeView().environment(\.managedObjectContext, self.context)
         }
-    }
+    } // NavigationView
+  } // body
     
     
     // simple date formatter
@@ -64,7 +66,7 @@ struct ContentView: View {
         //dateFormatter.timeStyle = .none
         return dateFormatter.string(from: date)
     
-    }
+    } // formatDate
     
 
 
@@ -75,14 +77,14 @@ struct ContentView: View {
          let blue:CGFloat = CGFloat(drand48())
 
          return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
-    }
+    } // getRandomColor
 
     func deleteItem(indexSet: IndexSet) {
         let source = indexSet.first!
         let deleteMe = recipes[source]
         context.delete(deleteMe)
         saveItems()
-    }
+    } // deleteItem
     
     func addItem() {
         let newItem = Recipe(context: context)
@@ -90,7 +92,7 @@ struct ContentView: View {
         newItem.lastCooked = Date()
         
         saveItems()
-    }
+    } // addItem
     
     func saveItems() {
         do {
@@ -98,6 +100,7 @@ struct ContentView: View {
         } catch {
             print(error)
         }
-    }
-}
+    } // saveItems
+  
+} // View
 
