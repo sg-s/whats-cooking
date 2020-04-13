@@ -58,7 +58,7 @@ struct ContentView: View {
         let source = indexSet.first!
         let deleteMe = recipes[source]
         context.delete(deleteMe)
-        saveItems()
+        // saveItems()
     } // deleteItem
     
     func addItem() {
@@ -104,6 +104,7 @@ struct RowView: View {
   } // getRandomColor
   
 var body: some View {
+  
   
   VStack{
     Text(recipe.name)
