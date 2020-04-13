@@ -27,6 +27,7 @@ struct NewRecipeView: View {
         let newRecipe = Recipe(context: context)
         newRecipe.name = text
         newRecipe.lastCooked = Date()
+        newRecipe.id = UUID()
         do {
             try self.context.save()
         } catch {}
