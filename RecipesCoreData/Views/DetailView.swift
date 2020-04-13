@@ -28,7 +28,7 @@ struct DetailView: View {
                 .frame(height: 300)
                 .edgesIgnoringSafeArea(.top)
             
-            TextField(self.recipe.name!, text: $text)
+            TextField(self.recipe.name, text: $text)
                 .font(.title)
             
         
@@ -44,7 +44,7 @@ struct DetailView: View {
             Spacer()
             
         } // VStack
-        .navigationBarTitle(Text(recipe.name!), displayMode: .inline)
+        .navigationBarTitle(Text(recipe.name), displayMode: .inline)
     
     } // body
     

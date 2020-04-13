@@ -10,71 +10,49 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(fetchRequest: Recipe.getListItemFetchRequest()) var recipes: FetchedResults<Recipe>
     
-    @Environment(\.managedObjectContext) var context 
-    
-    
-    // recipeName is owned and managed by ContentView
-    // which is why we have marked it as private
-    // because we marked it as @State, we have to
-    // initialize it here
-    @State private var recipeName: String = ""
-    
-
-    // get all data, sorted by lastCooked
-    @FetchRequest(
-        entity: Recipe.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Recipe.lastCooked, ascending: true)]
-    ) var recipes: FetchedResults<Recipe>
-    
-    // @Binding declares the dependency on a @state var
-    // owned by another view, which uses the $prefix to
-    // pass a binding to this state to another view.
-    // in the recieving view, @Binding var is a reference
-    // to the data, so it doesn't need to be initialzied
-    
-
     @State var modalIsPresented = false
     
     
     var body: some View {
-        
         NavigationView {
-            List {
-                ForEach(recipes, id: \.self) { recipe in
-                    NavigationLink(destination: DetailView(recipe: recipe)) {
-                        
-                        VStack{
-                            Text(recipe.name!)
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                 .foregroundColor(Color(self.getRandomColor()))
+            VStack {
+                List {
+                    ForEach(recipes, id: \.self) { recipe in
+                        NavigationLink(destination: DetailView(recipe: recipe)) {
                             
-                            Text("Last cooked on \(self.formatDate(date: recipe.lastCooked!))")
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.gray)
-                        } // VStack
-                        
+                            VStack{
+                                Text(recipe.name)
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                     .foregroundColor(Color(self.getRandomColor()))
+                                
+                                Text("Last cooked on \(self.formatDate(date: recipe.lastCooked))")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(.gray)
+                            } // VStack
+                            
+                        }
                     }
+                    .onDelete(perform: deleteItem)
+                    
                 }
-                .onDelete(perform: removeRecipe)
                 
-
             }
-            
             .navigationBarTitle("What's cooking?")
             .navigationBarItems(
-                leading: EditButton(),
-                trailing:
-                    Button(
-                        action: {self.modalIsPresented = true}) {
-                    Image(systemName: "plus")
-                    } )
-            
+            leading: EditButton(),
+            trailing:
+                Button(
+                    action: {self.modalIsPresented = true}) {
+                Image(systemName: "plus.app.fill")
+                } )
             .sheet(isPresented: $modalIsPresented) {
-                NewRecipeView().environment(\.managedObjectContext, self.context)
-                }
+            NewRecipeView().environment(\.managedObjectContext, self.context)
+            }
         }
     }
     
@@ -99,15 +77,27 @@ struct ContentView: View {
          return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
     }
 
-    
-    func removeRecipe(at offsets: IndexSet) {
-        for index in offsets {
-            let recipe = recipes[index]
-            context.delete(recipe)
-            // this magically saves the data also
-        }
+    func deleteItem(indexSet: IndexSet) {
+        let source = indexSet.first!
+        let deleteMe = recipes[source]
+        context.delete(deleteMe)
+        saveItems()
     }
     
+    func addItem() {
+        let newItem = Recipe(context: context)
+        newItem.name = "New Meal"
+        newItem.lastCooked = Date()
+        
+        saveItems()
+    }
     
-    
+    func saveItems() {
+        do {
+            try context.save()
+        } catch {
+            print(error)
+        }
+    }
 }
+
