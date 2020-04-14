@@ -23,29 +23,28 @@ struct ContentView: View {
           NavigationLink(destination: DetailView(recipe: recipe)) {
               
             RowView(recipe: recipe)
-            
-//
           
             } // NavigationLink
         } // ForEach
         .onDelete(perform: deleteItem)
       } // List
-            
-        .navigationBarTitle("What's cooking?")
-        .navigationBarItems(
-        leading: EditButton(),
-        trailing:
-            Button(
-                action: {self.modalIsPresented = true}) {
-            Image(systemName: "plus.app.fill")
-                  .resizable()
-                  .aspectRatio(contentMode: .fit)
-                  .frame(height: 30)
+      .padding(0)
+          
+      .navigationBarTitle("What's cooking?")
+      .navigationBarItems(
+      leading: EditButton(),
+      trailing:
+          Button(
+              action: {self.modalIsPresented = true}) {
+          Image(systemName: "plus.app.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 30)
 
-            } )
-        .sheet(isPresented: $modalIsPresented) {
-        NewRecipeView().environment(\.managedObjectContext, self.context)
-        }
+          } )
+      .sheet(isPresented: $modalIsPresented) {
+      NewRecipeView().environment(\.managedObjectContext, self.context)
+      }
     } // NavigationView
   } // body
     
@@ -105,7 +104,7 @@ struct RowView: View {
   
 var body: some View {
   
-  
+
   VStack{
     Text(recipe.name)
       .font(.largeTitle)
@@ -117,6 +116,9 @@ var body: some View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundColor(.gray)
     } // VStack
+
+
+
   
 } // RowView:body
   
