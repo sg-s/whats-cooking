@@ -19,28 +19,57 @@ struct DetailView: View {
 
   @State var justCooked: Bool = false
 
+  // image capture
+  @State var image: Image? = nil
+  @State var showCaptureImageView: Bool = false
+
+  
   var body: some View {
     
-    NavigationView {
       VStack {
-          
+        
+        
         TextField("Item Name", text: $itemName)
-                .font(.title)
-
-
+          .font(.largeTitle)
+        
+        
+        GeometryReader { geo in
+          self.image?
+            .resizable()
+            .scaledToFit()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: geo.size.width)
+        }
+    
+        
+        Button(action: {
+            withAnimation {
+                self.showCaptureImageView.toggle()
+            }
+        }) {
+            Image(systemName: "photo")
+                .font(.headline)
+            Text("Choose picture").font(.headline)
+        }.foregroundColor(.gray)
+      
+      
         
         Spacer()
         
         Button(action: {
             self.justCooked = true
-            // self.presentationMode.wrappedValue.dismiss()
         }) {
             Text("Just cooked!")
         }
         
         
         Spacer()
-          
+
+        
+        
+        .sheet(isPresented: $showCaptureImageView) {
+            CaptureImageView(isShown: self.$showCaptureImageView, image: self.$image)
+        }
       } // VStack
       .onAppear(perform: {
           self.itemName = self.recipe.name
@@ -59,8 +88,34 @@ struct DetailView: View {
               print(error)
           }
       })
-    } // NavigationView
-    .navigationBarTitle(self.itemName)
+    
   } // body
 }
+
+
+struct CaptureImageView {
+  
+  /// MARK: - Properties
+  @Binding var isShown: Bool
+  @Binding var image: Image?
+  
+  func makeCoordinator() -> Coordinator {
+    return Coordinator(isShown: $isShown, image: $image)
+  }
+}
+
+extension CaptureImageView: UIViewControllerRepresentable {
+  func makeUIViewController(context: UIViewControllerRepresentableContext<CaptureImageView>) -> UIImagePickerController {
+    let picker = UIImagePickerController()
+    picker.delegate = context.coordinator
+    //picker.sourceType = .camera
+    return picker
+  }
+  
+  func updateUIViewController(_ uiViewController: UIImagePickerController,
+                              context: UIViewControllerRepresentableContext<CaptureImageView>) {
+    
+  }
+}
+
 

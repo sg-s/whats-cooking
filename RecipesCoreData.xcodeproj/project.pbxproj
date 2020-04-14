@@ -17,6 +17,7 @@
 		AC1198F524411957006B74AA /* NewRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1198F424411957006B74AA /* NewRecipeView.swift */; };
 		AC20F51324424EAA00317B69 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20F51224424EAA00317B69 /* DetailView.swift */; };
 		AC490CFE2443E35E005E5CE2 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490CFD2443E35E005E5CE2 /* Recipe.swift */; };
+		ACA9FFB8244631A000A5261C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9FFB7244631A000A5261C /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		AC1198F424411957006B74AA /* NewRecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecipeView.swift; sourceTree = "<group>"; };
 		AC20F51224424EAA00317B69 /* DetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		AC490CFD2443E35E005E5CE2 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		ACA9FFB7244631A000A5261C /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		AC490CFC2443E35E005E5CE2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				ACA9FFB7244631A000A5261C /* Coordinator.swift */,
 				AC490CFD2443E35E005E5CE2 /* Recipe.swift */,
 			);
 			path = Models;
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA9FFB8244631A000A5261C /* Coordinator.swift in Sources */,
 				AC1198D924411145006B74AA /* AppDelegate.swift in Sources */,
 				AC20F51324424EAA00317B69 /* DetailView.swift in Sources */,
 				AC1198DB24411145006B74AA /* SceneDelegate.swift in Sources */,
